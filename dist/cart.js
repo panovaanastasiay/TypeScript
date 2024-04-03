@@ -25,8 +25,8 @@ var Cart = /** @class */ (function () {
     });
     Cart.prototype.costWithoutDiscount = function () {
         var cost;
-        cost = this._items.reduce(function (sum, item) {
-            return sum + item.price;
+        cost = this._items.reduce(function (sum, currentAmount) {
+            return sum + currentAmount.price;
         }, 0);
         return cost;
     };
@@ -35,12 +35,10 @@ var Cart = /** @class */ (function () {
         return cost - cost * discount / 100;
     };
     Cart.prototype.rem = function (id) {
-        this._items = this._items.filter(function (item) {
-            if (item.id == id) {
-                return false;
-            }
-            return true;
-        });
+        var indexToRemove = this._items.findIndex(function (item) { return item.id === id; });
+        if (indexToRemove !== -1) {
+            this._items.splice(indexToRemove, 1);
+        }
     };
     return Cart;
 }());
