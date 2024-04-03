@@ -12,11 +12,11 @@ export default class Cart {
     }
 
     costWithoutDiscount(): number {
-        let cost: number;
-        cost = this._items.reduce((sum: number, item: Buyable) => {
-            return sum + item.price;
-        }, 0);
-        return cost;
+      let cost: number;
+      cost = this._items.reduce(function(sum, currentAmount){
+        return sum + currentAmount.price
+      }, 0);
+      return cost;
     }
 
     costWithDiscount(discount: number): number {
@@ -25,11 +25,9 @@ export default class Cart {
     }
 
     rem(id: number): void {
-        this._items = this._items.filter((item: Buyable) => {
-            if (item.id == id) {
-                return false;
-            }
-            return true;  
-        });
+      const indexToRemove = this._items.findIndex((item: Buyable) => item.id === id);
+      if(indexToRemove !== -1) {
+        this._items.splice(indexToRemove, 1)
+      }
     }
 }
